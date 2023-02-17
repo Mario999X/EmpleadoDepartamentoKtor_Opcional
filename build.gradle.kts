@@ -2,10 +2,12 @@ val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
 
+val ksp_version: String by project
+
 plugins {
-    kotlin("jvm") version "1.8.10"
+    kotlin("jvm") version "1.8.0"
     id("io.ktor.plugin") version "2.2.3"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
     // KSP
     id("com.google.devtools.ksp") version "1.8.0-1.0.8"
     //Dokka
@@ -36,6 +38,9 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
 
+    // Corrutinas
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+
     // JWT
     implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
@@ -53,7 +58,7 @@ dependencies {
     implementation("io.insert-koin:koin-ktor:3.3.0") // Koin para Ktor
     implementation("io.insert-koin:koin-logger-slf4j:3.3.0") // Koin para Ktor con Logger
     implementation("io.insert-koin:koin-annotations:1.1.0") // Si usamos Koin con KSP Anotaciones
-    ksp("io.insert-koin:koin-ksp-compiler:1.8.0-1.0.8") // Si usamos Koin con KSP Anotaciones
+    ksp("io.insert-koin:koin-ksp-compiler:1.1.0") // Si usamos Koin con KSP Anotaciones
 
     // Cache
     implementation("io.github.reactivecircus.cache4k:cache4k:0.9.0")

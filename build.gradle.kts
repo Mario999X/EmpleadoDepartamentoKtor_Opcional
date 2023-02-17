@@ -8,6 +8,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
     // KSP
     id("com.google.devtools.ksp") version "1.8.0-1.0.8"
+    //Dokka
+    id("org.jetbrains.dokka") version "1.7.20"
 }
 
 group = "resa.mario"
@@ -58,6 +60,9 @@ dependencies {
 
     // BCrypt
     implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
+
+    //Dokka
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
 }
 
 // KSP II -> Para Annotations

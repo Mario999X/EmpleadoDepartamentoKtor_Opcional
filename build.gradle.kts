@@ -10,6 +10,8 @@ plugins {
     id("com.google.devtools.ksp") version "1.8.0-1.0.8"
     //Dokka
     id("org.jetbrains.dokka") version "1.7.20"
+    // https://ktor.io/docs/gradle-application-plugin.html
+    application
 }
 
 group = "resa.mario"
@@ -23,6 +25,8 @@ application {
 
 repositories {
     mavenCentral()
+    // Para ktor-swagger-ui
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -66,6 +70,9 @@ dependencies {
 
     // Dokka
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
+
+    // Swagger y Open API con DSL
+    implementation("io.github.smiley4:ktor-swagger-ui:1.0.2")
 }
 
 // KSP II -> Para Annotations
@@ -91,7 +98,7 @@ ktor {
     }
 }
 
-// Java 17
+// Java 17, asi evitamos problemas de compatibilida con la version que pongamos en el Dockerfile
 // https://kotlinlang.org/docs/get-started-with-jvm-gradle-project.html#explore-the-build-script
 kotlin { // Extension for easy setup
     jvmToolchain(17) // Target version of generated JVM bytecode

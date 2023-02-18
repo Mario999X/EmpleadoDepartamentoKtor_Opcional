@@ -15,6 +15,7 @@ import resa.mario.models.Usuario
 import resa.mario.services.departamento.DepartamentoServiceImpl
 import resa.mario.services.usuario.UsuarioServiceImpl
 import java.util.*
+import io.github.smiley4.ktorswaggerui.dsl.*
 
 private const val END_POINT = "api/departamentos"
 
@@ -27,7 +28,21 @@ fun Application.departamentosRoutes() {
     routing {
         route("/$END_POINT") {
             // Get All
-            get {
+            // Se aplica Swagger
+            get({
+                description = "Get all departamentos"
+                response {
+                    default {
+                        description = "Devuelve listado de DepartamentoDTO"
+                    }
+                    HttpStatusCode.OK to {
+                        description = "Lista de departamentosDTO"
+                        body<List<DepartamentoDTO>> { description = "Lista de departamentosDTO" }
+                    }
+                }
+            }
+                // Se aplican las operaciones request-response reales
+            ) {
                 val result = mutableListOf<DepartamentoDTO>()
 
                 // Procesamos el flujo

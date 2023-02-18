@@ -1,4 +1,5 @@
 package resa.mario
+
 /**
  * @Author Mario Resa
  */
@@ -26,7 +27,11 @@ fun Application.module() {
     // Almacenamiento
     configureStorage()
 
+    // Default
     configureSerialization()
     configureSecurity()
     configureRouting()
+
+    // Swagger
+    configureSwagger()
 }

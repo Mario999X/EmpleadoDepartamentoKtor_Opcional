@@ -6,7 +6,7 @@ data class Empleado(
     val id: UUID = UUID.randomUUID(),
     val nombre: String,
     val email: String,
-    val departamentoId: UUID? = null,
+    var departamentoId: UUID? = null,
     val avatar: String
 ) {
     override fun toString(): String {

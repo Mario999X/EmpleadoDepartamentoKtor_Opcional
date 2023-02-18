@@ -67,16 +67,27 @@ class UsuarioRepositoryImpl(
 
         val user = findById(id) ?: return null
 
+        // Para evitar el cambio de id
+        val userCopy = entity.copy(
+            id = user.id,
+            username = entity.username,
+            password = entity.password,
+            role = entity.role
+        )
+
         user.let {
-            dataBaseService.getTables().tableUsuarios.replace(id, entity)
+            dataBaseService.getTables().tableUsuarios.replace(id, userCopy)
         }
 
-        return user
+        return userCopy
     }
 
     override suspend fun delete(entity: Usuario): Usuario? {
         log.info { "Eliminando usuario con id: ${entity.id}" }
 
-        return dataBaseService.getTables().tableUsuarios.remove(entity.id)
+        val user = findById(entity.id) ?: return null
+        dataBaseService.getTables().tableUsuarios.remove(user.id)
+
+        return user
     }
 }

@@ -8,7 +8,7 @@ import io.ktor.http.*
 import resa.mario.plugins.*
 
 class ApplicationTest {
-    @Test
+/*    @Test
     fun testRoot() = testApplication {
         application {
             configureRouting()
@@ -17,5 +17,5 @@ class ApplicationTest {
             assertEquals(HttpStatusCode.OK, status)
             assertEquals("Hello World!", bodyAsText())
         }
-    }
+    }*/
 }

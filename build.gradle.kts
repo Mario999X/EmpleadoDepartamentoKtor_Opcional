@@ -2,8 +2,6 @@ val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
 
-val ksp_version: String by project
-
 plugins {
     kotlin("jvm") version "1.8.0"
     id("io.ktor.plugin") version "2.2.3"
@@ -66,11 +64,35 @@ dependencies {
     // BCrypt
     implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
 
-    //Dokka
+    // Dokka
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
 }
 
 // KSP II -> Para Annotations
 sourceSets.main {
     java.srcDirs("build/generated/ksp/main/kotlin")
+}
+
+// Docker, cuidado con las mayusculas en el nombre de la imagen y de los archivos en la raiz
+ktor {
+    docker {
+        localImageName.set("empleado-departamento-ktor-opcional")
+        imageTag.set("0.0.1-preview")
+        jreVersion.set(io.ktor.plugin.features.JreVersion.JRE_17)
+        portMappings.set(
+            listOf(
+                io.ktor.plugin.features.DockerPortMapping(
+                    6969,
+                    6969,
+                    io.ktor.plugin.features.DockerPortMappingProtocol.TCP
+                )
+            )
+        )
+    }
+}
+
+// Java 17
+// https://kotlinlang.org/docs/get-started-with-jvm-gradle-project.html#explore-the-build-script
+kotlin { // Extension for easy setup
+    jvmToolchain(17) // Target version of generated JVM bytecode
 }

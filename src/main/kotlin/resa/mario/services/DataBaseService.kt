@@ -33,6 +33,8 @@ class DataBaseService(
     fun getTables() = database
 
     fun initDataBaseService() {
+        println("Cargando datos")
+
         initData()
     }
 }

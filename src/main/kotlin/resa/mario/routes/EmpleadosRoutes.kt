@@ -9,6 +9,7 @@ import org.koin.ktor.ext.inject
 import resa.mario.dto.EmpleadoDTO
 import resa.mario.mappers.toDTO
 import resa.mario.mappers.toEmpleado
+import resa.mario.services.StorageService
 import resa.mario.services.empleado.EmpleadoServiceImpl
 import java.util.*
 
@@ -17,6 +18,8 @@ private const val END_POINT = "api/empleados"
 fun Application.empleadosRoutes() {
 
     val empleadoService: EmpleadoServiceImpl by inject()
+
+    val storageService: StorageService by inject()
 
     routing {
         route("/$END_POINT") {
@@ -52,8 +55,12 @@ fun Application.empleadosRoutes() {
             // Post /endpoint
             post {
                 try {
+                    // Recibimos al empleado
                     val empleadoReceive = call.receive<EmpleadoDTO>()
-                    val empleadoSave = empleadoService.save(empleadoReceive.toEmpleado())
+
+                    // DTO -> MODEL
+                    val empleadoSave = empleadoReceive.toEmpleado()
+
                     call.respond(HttpStatusCode.Created, empleadoService.findById(empleadoSave.id).toDTO())
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, e.message.toString())
@@ -66,6 +73,31 @@ fun Application.empleadosRoutes() {
                     val request = call.receive<EmpleadoDTO>()
                     val empleado = empleadoService.update(UUID.fromString(id), request.toEmpleado())
                     call.respond(HttpStatusCode.OK, empleado.toDTO())
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, e.message.toString())
+                }
+            }
+
+            // Actualizar solo el avatar
+            put("/avatar/{id}") {
+                try {
+                    // Vaya movida lo de los ficheros
+                    // Recibimos tanto el avatar como el id
+                    val avatar = call.receiveChannel()
+                    val id = call.parameters["id"]!!
+
+                    // Obtenemos al empleado
+                    val empleadoUpdate = empleadoService.findById(UUID.fromString(id))
+
+                    // Damos nombre al archivo y lo almacenamos
+                    val fileName = "${empleadoUpdate.id}.png"
+                    storageService.saveFile(fileName, avatar)
+
+                    // Actualizamos el avatar al usuario
+                    empleadoUpdate.avatar = fileName
+                    empleadoService.update(empleadoUpdate.id, empleadoUpdate)
+
+                    call.respond(HttpStatusCode.OK, empleadoUpdate.toDTO())
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, e.message.toString())
                 }

@@ -5,6 +5,7 @@ import io.ktor.server.response.*
 import io.ktor.server.application.*
 import resa.mario.routes.departamentosRoutes
 import resa.mario.routes.empleadosRoutes
+import resa.mario.routes.storageRoutes
 import resa.mario.routes.usuariosRoutes
 
 fun Application.configureRouting() {
@@ -14,6 +15,7 @@ fun Application.configureRouting() {
         }
     }
 
+    storageRoutes()
     usuariosRoutes()
     departamentosRoutes()
     empleadosRoutes()

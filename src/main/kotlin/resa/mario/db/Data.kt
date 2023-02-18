@@ -29,21 +29,25 @@ fun getEmpleados() = listOf(
         nombre = "Mario",
         email = "mario@gmail.com",
         departamentoId = getDepartamentos()[0].id,
-        avatar = "Ejemplo"
+        avatar = "https://cdn-icons-png.flaticon.com/512/2550/2550260.png"
     ),
     Empleado(
         nombre = "Alysys",
         email = "alysys@gmail.com",
         departamentoId = getDepartamentos()[1].id,
-        avatar = "Ejemplo"
+        avatar = "https://cdn-icons-png.flaticon.com/512/2550/2550260.png"
     ),
     Empleado(
         nombre = "Vincent",
         email = "vincent@gmail.com",
         departamentoId = getDepartamentos()[1].id,
-        avatar = "Ejemplo"
+        avatar = "https://cdn-icons-png.flaticon.com/512/2550/2550260.png"
     ),
-    Empleado(nombre = "Kratos", email = "kratos@gmail.com", avatar = "Ejemplo"),
+    Empleado(
+        nombre = "Kratos",
+        email = "kratos@gmail.com",
+        avatar = "https://cdn-icons-png.flaticon.com/512/2550/2550260.png"
+    ),
 )
 
 fun getUsuarios() = listOf(

@@ -15,6 +15,9 @@ fun Application.module() {
     // "Base de datos" = Mapas
     configureDataBase()
 
+    // Almacenamiento
+    configureStorage()
+
     configureSerialization()
     configureSecurity()
     configureRouting()

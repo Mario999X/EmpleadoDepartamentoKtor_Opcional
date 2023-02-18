@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class EmpleadoDTO(
     val nombre: String,
     val email: String,
-    val departamentoId: String,
-    val avatar: String
+    val departamentoId: String? = null,
+    val avatar: String?
 )

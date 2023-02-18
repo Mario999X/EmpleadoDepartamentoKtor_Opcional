@@ -7,6 +7,11 @@ import resa.mario.models.Usuario
 import resa.mario.repositories.usuario.UsuarioRepositoryImpl
 import java.util.*
 
+/**
+ * Servicio de usuarios, se encarga de realizar las llamadas al repositorio relacionado
+ *
+ * @property repository
+ */
 @Single
 class UsuarioServiceImpl(
     @Named("UsuarioRepository")

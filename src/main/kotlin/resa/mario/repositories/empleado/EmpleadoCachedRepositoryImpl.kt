@@ -11,7 +11,12 @@ import java.util.*
 
 private val log = KotlinLogging.logger {}
 
-
+/**
+ * Repositorio de empleados cacheado que trabaja con la cache y el repositorio original
+ *
+ * @property repository
+ * @property cache
+ */
 @Single
 @Named("EmpleadoCachedRepository")
 class EmpleadoCachedRepositoryImpl(
@@ -32,7 +37,7 @@ class EmpleadoCachedRepositoryImpl(
 
         refreshJob = CoroutineScope(Dispatchers.IO).launch {
             while (true) {
-                // Investigar por que salta un error si el delay se aplica debajo del findAll cuando se crea primero un empleado
+                // TODO: Investigar por que salta un error si el delay se aplica debajo del findAll cuando se crea primero un empleado
                 delay(cache.refreshTime.toLong())
 
                 log.info { "Refrescando cache de empleados" }

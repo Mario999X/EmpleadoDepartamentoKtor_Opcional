@@ -9,6 +9,12 @@ import resa.mario.repositories.departamento.DepartamentoCachedRepositoryImpl
 import resa.mario.repositories.empleado.EmpleadoCachedRepositoryImpl
 import java.util.UUID
 
+/**
+ * Servicio de departamentos, se encarga de realizar las llamadas a los repositorios relacionados
+ *
+ * @property repository
+ * @property empleadoRepository
+ */
 @Single
 class DepartamentoServiceImpl(
     @Named("DepartamentoCachedRepository")
@@ -40,12 +46,10 @@ class DepartamentoServiceImpl(
     override suspend fun delete(entity: Departamento): Departamento {
         val existe = repository.findById(entity.id)
 
-        //System.err.println(existe)
         existe?.let {
             val empleados = empleadoRepository.findAll().toList().filter { it.departamentoId == existe.id }
             val count = empleados.size
 
-            //System.err.println(empleados.size)
             if (count == 0) {
                 return repository.delete(existe)!!
             } else throw Exception("No fue posible eliminar el departamento | $count empleados")

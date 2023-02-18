@@ -6,6 +6,10 @@ import resa.mario.models.Empleado
 import resa.mario.models.Usuario
 import java.util.UUID
 
+/**
+ * Clase que emula una base de datos, cada mapa representa una tabla.
+ *
+ */
 @Single
 class Database {
 

@@ -6,6 +6,10 @@ import resa.mario.models.Empleado
 import java.util.*
 import kotlin.time.Duration.Companion.minutes
 
+/**
+ * Servicio de cache para empleados
+ *
+ */
 @Single
 class EmpleadoCache {
 

@@ -4,6 +4,11 @@ import resa.mario.dto.EmpleadoDTO
 import resa.mario.models.Empleado
 import java.util.UUID
 
+/**
+ * Funcion que permite pasar de modelo a DTO
+ *
+ * @return [EmpleadoDTO]
+ */
 fun Empleado.toDTO(): EmpleadoDTO {
     return EmpleadoDTO(
         nombre = nombre,
@@ -13,6 +18,11 @@ fun Empleado.toDTO(): EmpleadoDTO {
     )
 }
 
+/**
+ * Funcion que permite pasar de DTO a modelo
+ *
+ * @return [Empleado]
+ */
 fun EmpleadoDTO.toEmpleado(): Empleado {
     return Empleado(
         nombre = nombre,

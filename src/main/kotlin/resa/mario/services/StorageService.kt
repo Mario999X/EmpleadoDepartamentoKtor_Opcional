@@ -12,14 +12,16 @@ import java.time.LocalDateTime
 
 private val log = KotlinLogging.logger {}
 
+/**
+ * Servicio del sistema de almacenamiento, se encarga de verificar el directorio de almacenamiento del programa y demas
+ * operaciones relacionadas con ficheros.
+ *
+ * @property storageConfig
+ */
 @Single
 class StorageService(
     private val storageConfig: StorageConfig
 ) {
-
-    fun getConfig(): StorageConfig {
-        return storageConfig
-    }
 
     fun initStorageDirectory() {
         if (!File(storageConfig.uploadDir).exists()) {

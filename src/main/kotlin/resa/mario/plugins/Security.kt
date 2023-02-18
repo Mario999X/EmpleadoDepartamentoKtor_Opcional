@@ -13,6 +13,7 @@ import resa.mario.services.TokensService
 
 fun Application.configureSecurity() {
 
+    // Cargamos los parametros del conf
     val tokenConfigParam = mapOf(
         "audience" to environment.config.property("jwt.audience").getString(),
         "secret" to environment.config.property("jwt.secret").getString(),
@@ -24,6 +25,7 @@ fun Application.configureSecurity() {
     val jwtService: TokensService by inject()
 
     authentication {
+        // Cargamos el verificador y preparamos la validacion
         jwt {
             verifier(jwtService.verifyJWT())
 
@@ -35,6 +37,7 @@ fun Application.configureSecurity() {
                     JWTPrincipal(it.payload)
                 } else null
             }
+            // En caso de token caducado o invalido
             challenge { defaultScheme, realm ->
                 call.respond(HttpStatusCode.Unauthorized, "Not authorized or expired")
             }

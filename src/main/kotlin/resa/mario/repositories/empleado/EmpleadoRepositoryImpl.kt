@@ -11,6 +11,11 @@ import java.util.*
 
 private val log = KotlinLogging.logger {}
 
+/**
+ * Repositorio de empleados que trabaja con la base de datos
+ *
+ * @property dataBaseService
+ */
 @Single
 @Named("EmpleadoRepository")
 class EmpleadoRepositoryImpl(

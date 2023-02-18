@@ -8,6 +8,12 @@ import resa.mario.repositories.departamento.DepartamentoCachedRepositoryImpl
 import resa.mario.repositories.empleado.EmpleadoCachedRepositoryImpl
 import java.util.UUID
 
+/**
+ * Servicio de empleados, se encarga de realizar las llamadas a los repositorios relacionados
+ *
+ * @property repository
+ * @property departamentoRepository
+ */
 @Single
 class EmpleadoServiceImpl(
     @Named("EmpleadoCachedRepository")

@@ -1,8 +1,16 @@
 package resa.mario
+/**
+ * @Author Mario Resa
+ */
 
 import io.ktor.server.application.*
 import resa.mario.plugins.*
 
+/**
+ * Funcion principal del programa.
+ *
+ * @param args
+ */
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
 

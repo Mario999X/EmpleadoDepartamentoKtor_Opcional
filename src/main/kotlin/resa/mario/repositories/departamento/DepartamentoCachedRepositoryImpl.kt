@@ -13,6 +13,12 @@ import java.util.*
 
 private val log = KotlinLogging.logger {}
 
+/**
+ * Repositorio de departamentos cacheado que trabaja con la cache y el repositorio original
+ *
+ * @property repository
+ * @property cache
+ */
 @Single
 @Named("DepartamentoCachedRepository")
 class DepartamentoCachedRepositoryImpl(

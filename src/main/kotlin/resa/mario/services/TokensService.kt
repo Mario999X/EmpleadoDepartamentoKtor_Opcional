@@ -8,6 +8,11 @@ import resa.mario.conf.TokenConfig
 import resa.mario.models.Usuario
 import java.util.*
 
+/**
+ * Servicio de tokens, en el configuramos la generacion de tokens y de verificarlos.
+ *
+ * @property tokenConfig
+ */
 @Single
 class TokensService(
     private val tokenConfig: TokenConfig

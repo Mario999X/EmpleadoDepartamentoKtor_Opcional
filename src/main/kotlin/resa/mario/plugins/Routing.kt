@@ -15,6 +15,7 @@ fun Application.configureRouting() {
         }
     }
 
+    // Llamada a las distintas rutas, del paquete "routes"
     storageRoutes()
     usuariosRoutes()
     departamentosRoutes()

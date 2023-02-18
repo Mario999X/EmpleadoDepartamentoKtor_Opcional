@@ -87,6 +87,7 @@ fun Application.departamentosRoutes() {
             authenticate {
                 delete("{id}") {
                     try {
+                        // Obtenemos tanto el id por parametro como el token, y verificamos al usuario con un claim
                         val id = call.parameters["id"]!!
                         val token = call.principal<JWTPrincipal>()
 

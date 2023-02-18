@@ -2,6 +2,8 @@ package resa.mario.routes
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -9,7 +11,10 @@ import org.koin.ktor.ext.inject
 import resa.mario.dto.DepartamentoDTO
 import resa.mario.mappers.toDTO
 import resa.mario.mappers.toDepartamento
+import resa.mario.models.Usuario
+import resa.mario.services.TokensService
 import resa.mario.services.departamento.DepartamentoServiceImpl
+import resa.mario.services.usuario.UsuarioServiceImpl
 import java.util.*
 
 private const val END_POINT = "api/departamentos"
@@ -17,6 +22,8 @@ private const val END_POINT = "api/departamentos"
 fun Application.departamentosRoutes() {
 
     val departamentoService: DepartamentoServiceImpl by inject()
+
+    val usuarioService: UsuarioServiceImpl by inject()
 
     routing {
         route("/$END_POINT") {
@@ -77,17 +84,29 @@ fun Application.departamentosRoutes() {
                 }
             }
 
-            delete("{id}") {
-                try {
-                    val id = call.parameters["id"]!!
+            // Enunciado, se debe proteger esta ruta con el rol de ADMIN
+            authenticate {
+                delete("{id}") {
+                    try {
+                        val id = call.parameters["id"]!!
+                        val token = call.principal<JWTPrincipal>()
 
-                    val departamentoDelete = departamentoService.findById(UUID.fromString(id))
-                    departamentoService.delete(departamentoDelete)
-                    call.respond(HttpStatusCode.NoContent)
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.NotFound, e.message.toString())
+                        val userId = token?.payload?.getClaim("userId").toString().replace("\"", "")
+                        val user = usuarioService.findById(UUID.fromString(userId))
+
+                        user.let {
+                            if (user.role == Usuario.Role.ADMIN.name) {
+                                val departamentoDelete = departamentoService.findById(UUID.fromString(id))
+                                departamentoService.delete(departamentoDelete)
+                                call.respond(HttpStatusCode.NoContent)
+                            } else call.respond(HttpStatusCode.Unauthorized, "Not Authorized")
+                        }
+                    } catch (e: Exception) {
+                        call.respond(HttpStatusCode.BadRequest, e.message.toString())
+                    }
                 }
             }
+
         }
     }
 }

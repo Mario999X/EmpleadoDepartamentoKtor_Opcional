@@ -32,7 +32,7 @@ fun Application.storageRoutes() {
                 response {
                     HttpStatusCode.OK to {
                         description = "Nombre correcto"
-                        body<File> { description = "Archivo solicitado" }
+                        body<File> { description = "Ruta del archivo solicitado" }
                     }
                     HttpStatusCode.NotFound to {
                         description = "Archivo no localizado"
@@ -44,7 +44,7 @@ fun Application.storageRoutes() {
                     val name = call.parameters["name"].toString()
                     val file = storageService.getFile(name)
 
-                    call.respond(HttpStatusCode.OK, file)
+                    call.respond(HttpStatusCode.OK, file.toString())
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.NotFound, e.message.toString())
                 }
@@ -70,7 +70,7 @@ fun Application.storageRoutes() {
                     val readChannel = call.receiveChannel()
 
                     // Damos nombre al archivo, y lo almacenamos con el metodo correspondiente
-                    val fileName = UUID.randomUUID().toString()
+                    val fileName = UUID.randomUUID().toString() + ".png"
                     val res = storageService.saveFile(fileName, readChannel)
 
                     call.respond(HttpStatusCode.OK, res)

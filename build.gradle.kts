@@ -56,6 +56,12 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
+    // Test corrutinas
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
+    // MockK
+    testImplementation("io.mockk:mockk:1.13.2")
+
     // Koin
     implementation("io.insert-koin:koin-ktor:3.3.0") // Koin para Ktor
     implementation("io.insert-koin:koin-logger-slf4j:3.3.0") // Koin para Ktor con Logger

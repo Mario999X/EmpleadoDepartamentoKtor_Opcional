@@ -78,7 +78,7 @@ fun Application.empleadosRoutes() {
                     val id = call.parameters["id"]!!
                     val empleado = empleadoService.findById(UUID.fromString(id))
 
-                    call.respond(HttpStatusCode.OK, empleado.toString())
+                    call.respond(HttpStatusCode.OK, empleado.toDTO())
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, e.message.toString())
                 }
@@ -110,6 +110,8 @@ fun Application.empleadosRoutes() {
 
                     // DTO -> MODEL
                     val empleadoSave = empleadoReceive.toEmpleado()
+
+                    empleadoService.save(empleadoSave)
 
                     call.respond(HttpStatusCode.Created, empleadoService.findById(empleadoSave.id).toDTO())
                 } catch (e: Exception) {

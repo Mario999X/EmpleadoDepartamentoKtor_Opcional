@@ -26,12 +26,14 @@ fun getDepartamentos() = listOf(
 
 fun getEmpleados() = listOf(
     Empleado(
+        id = UUID.fromString("db7fbce4-b095-11ed-afa1-0242ac120002"),
         nombre = "Mario",
         email = "mario@gmail.com",
         departamentoId = getDepartamentos()[0].id,
         avatar = "https://cdn-icons-png.flaticon.com/512/2550/2550260.png"
     ),
     Empleado(
+        id = UUID.fromString("8f26fa30-b09d-11ed-afa1-0242ac120002"),
         nombre = "Alysys",
         email = "alysys@gmail.com",
         departamentoId = getDepartamentos()[1].id,

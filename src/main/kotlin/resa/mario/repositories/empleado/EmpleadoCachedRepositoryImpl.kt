@@ -84,22 +84,18 @@ class EmpleadoCachedRepositoryImpl(
         return@withContext entity
     }
 
-    override suspend fun update(id: UUID, entity: Empleado): Empleado? = withContext(Dispatchers.IO) {
+    override suspend fun update(id: UUID, entity: Empleado): Empleado = withContext(Dispatchers.IO) {
         log.info { "Actualizando empleado en cache y base de datos" }
 
-        val existe = findById(id)
-
-        if (existe == null) {
-            launch {
-                cache.cache.put(id, entity)
-            }
-
-            launch {
-                repository.update(id, entity)
-            }
+        launch {
+            cache.cache.put(id, entity)
         }
 
-        return@withContext existe
+        launch {
+            repository.update(id, entity)
+        }
+
+        return@withContext entity
     }
 
     override suspend fun delete(entity: Empleado): Empleado? = withContext(Dispatchers.IO) {

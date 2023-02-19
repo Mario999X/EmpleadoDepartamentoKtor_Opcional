@@ -52,7 +52,7 @@ class EmpleadoServiceImpl(
                     entity.departamentoId = existe.departamentoId
                 }
             }
-            return repository.update(id, entity)!!
+            return repository.update(id, entity)
         } ?: throw Exception("No se encontro ese empleado")
     }
 

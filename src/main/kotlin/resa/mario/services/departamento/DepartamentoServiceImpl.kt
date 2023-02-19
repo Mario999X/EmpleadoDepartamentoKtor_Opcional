@@ -39,7 +39,7 @@ class DepartamentoServiceImpl(
         val existe = repository.findById(id)
 
         existe?.let {
-            return repository.update(id, entity)!!
+            return repository.update(id, entity)
         } ?: throw Exception("No se encontro ese departamento")
     }
 

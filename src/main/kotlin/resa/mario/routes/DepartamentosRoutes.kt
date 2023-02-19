@@ -1,5 +1,9 @@
 package resa.mario.routes
 
+import io.github.smiley4.ktorswaggerui.dsl.delete
+import io.github.smiley4.ktorswaggerui.dsl.get
+import io.github.smiley4.ktorswaggerui.dsl.post
+import io.github.smiley4.ktorswaggerui.dsl.put
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -15,7 +19,6 @@ import resa.mario.models.Usuario
 import resa.mario.services.departamento.DepartamentoServiceImpl
 import resa.mario.services.usuario.UsuarioServiceImpl
 import java.util.*
-import io.github.smiley4.ktorswaggerui.dsl.*
 
 private const val END_POINT = "api/departamentos"
 
@@ -59,7 +62,25 @@ fun Application.departamentosRoutes() {
             }
 
             // Get by Id /endpoint/id
-            get("{id}") {
+            get("{id}", {
+                request {
+                    pathParameter<String>("id") {
+                        description = "Id del departamento que nos interese encontrar"
+                        required = true
+                    }
+                }
+                response {
+                    HttpStatusCode.OK to {
+                        description = "Id correcto"
+                        body<DepartamentoDTO> { description = "DepartamentoDTO solicitado" }
+                    }
+                    HttpStatusCode.BadRequest to {
+                        description = "Id incorrecto, o no se encontro el departamento"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }
+            ) {
                 try {
                     val id = call.parameters["id"]!!
                     val departamento = departamentoService.findById(UUID.fromString(id))
@@ -75,7 +96,25 @@ fun Application.departamentosRoutes() {
              * EN THUNDERCLIENT, HEADERS -> Content-Type __ application/json
              * Luego en BODY -> JSON
             */
-            post {
+            post({
+                description = "Agregar un nuevo departamento"
+                request {
+                    body<DepartamentoDTO> {
+                        description = "Se recibe un DepartamentoDTO"
+                    }
+                }
+                response {
+                    HttpStatusCode.Created to {
+                        description = "Departamento creado correctamente"
+                        body<DepartamentoDTO> { description = "DepartamentoDTO creado" }
+                    }
+                    HttpStatusCode.BadRequest to {
+                        description = "Algun campo incorrecto"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }
+            ) {
                 try {
                     val departamentoReceive = call.receive<DepartamentoDTO>()
                     val departamentoSave = departamentoService.save(departamentoReceive.toDepartamento())
@@ -87,12 +126,34 @@ fun Application.departamentosRoutes() {
                 }
             }
 
-            put("{id}") {
+            put("{id}", {
+                description = "Actualizar un departamento"
+                request {
+                    pathParameter<String>("id") {
+                        description = "Id del departamento"
+                        required = true
+                    }
+                    body<DepartamentoDTO> {
+                        description = "Se recibe un DepartamentoDTO"
+                    }
+                }
+                response {
+                    HttpStatusCode.OK to {
+                        description = "Departamento actualizado"
+                        body<DepartamentoDTO> { description = "DepartamentoDTO actualizado" }
+                    }
+                    HttpStatusCode.BadRequest to {
+                        description = "Algun campo incorrecto, departamento no localizado"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }
+            ) {
                 try {
                     val id = call.parameters["id"]!!
                     val request = call.receive<DepartamentoDTO>()
                     val departamento = departamentoService.update(UUID.fromString(id), request.toDepartamento())
-                    call.respond(HttpStatusCode.OK, departamento.toString())
+                    call.respond(HttpStatusCode.OK, departamento.toDTO())
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, e.message.toString())
                 }
@@ -100,7 +161,33 @@ fun Application.departamentosRoutes() {
 
             // Enunciado, se debe proteger esta ruta con el rol de ADMIN
             authenticate {
-                delete("{id}") {
+                delete("{id}", {
+                    description = "Eliminacion de un departamento con id"
+                    securitySchemeName = "JWT-Auth" // Opcional
+                    request {
+                        pathParameter<String>("id") {
+                            description = "Id del departamento a eliminar"
+                            required = true
+                        }
+                    }
+
+                    response {
+                        HttpStatusCode.NoContent to {
+                            description = "Departamento eliminado con exito"
+                        }
+
+                        HttpStatusCode.Unauthorized to {
+                            description = "El usuario no tiene permisos para esta operacion"
+                            body<String> { description = "Not Authorized" }
+                        }
+
+                        HttpStatusCode.BadRequest to {
+                            description = "Departamento no encontrado, o el departamento tiene al menos 1 empleado"
+                            body<String> { description = "Mensaje con la excepcion correspondiente" }
+                        }
+                    }
+                }
+                ) {
                     try {
                         // Obtenemos tanto el id por parametro como el token, y verificamos al usuario con un claim
                         val id = call.parameters["id"]!!
@@ -121,7 +208,6 @@ fun Application.departamentosRoutes() {
                     }
                 }
             }
-
         }
     }
 }

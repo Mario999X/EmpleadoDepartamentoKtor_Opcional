@@ -1,5 +1,9 @@
 package resa.mario.routes
 
+import io.github.smiley4.ktorswaggerui.dsl.delete
+import io.github.smiley4.ktorswaggerui.dsl.get
+import io.github.smiley4.ktorswaggerui.dsl.post
+import io.github.smiley4.ktorswaggerui.dsl.put
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -24,7 +28,16 @@ fun Application.empleadosRoutes() {
     routing {
         route("/$END_POINT") {
             // Get All
-            get {
+            get({
+                description = "Get all empleados"
+                response {
+                    HttpStatusCode.OK to {
+                        description = "Lista de empleadosDTO"
+                        body<List<EmpleadoDTO>> { description = "Lista de empleadosDTO" }
+                    }
+                }
+            }
+            ) {
                 val result = mutableListOf<EmpleadoDTO>()
 
                 // Procesamos el flujo
@@ -41,7 +54,26 @@ fun Application.empleadosRoutes() {
             }
 
             // Get By Id
-            get("{id}") {
+            get("{id}", {
+                description = "Get by id empleado"
+                request {
+                    pathParameter<String>("id") {
+                        description = "Id del empleado que nos interese encontrar"
+                        required = true
+                    }
+                }
+                response {
+                    HttpStatusCode.OK to {
+                        description = "Id correcto"
+                        body<EmpleadoDTO> { description = "EmpleadoDTO solicitado" }
+                    }
+                    HttpStatusCode.BadRequest to {
+                        description = "Id incorrecto, o no se encontro al empleado"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }
+            ) {
                 try {
                     val id = call.parameters["id"]!!
                     val empleado = empleadoService.findById(UUID.fromString(id))
@@ -53,7 +85,25 @@ fun Application.empleadosRoutes() {
             }
 
             // Post /endpoint
-            post {
+            post({
+                description = "Post empleado"
+                request {
+                    body<EmpleadoDTO> {
+                        description = "Se recibe un EmpleadoDTO"
+                    }
+                }
+                response {
+                    HttpStatusCode.Created to {
+                        description = "Empleado creado correctamente"
+                        body<EmpleadoDTO> { description = "EmpleadoDTO creado" }
+                    }
+                    HttpStatusCode.BadRequest to {
+                        description = "Algun campo incorrecto"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }
+            ) {
                 try {
                     // Recibimos al empleado
                     val empleadoReceive = call.receive<EmpleadoDTO>()
@@ -67,7 +117,28 @@ fun Application.empleadosRoutes() {
                 }
             }
 
-            put("{id}") {
+            put("{id}", {
+                description = "Put empleado"
+                request {
+                    pathParameter<String>("id") {
+                        description = "Id del empleado"
+                        required = true
+                    }
+                    body<EmpleadoDTO> {
+                        description = "Se recibe un EmpleadoDTO"
+                    }
+                }
+                response {
+                    HttpStatusCode.OK to {
+                        description = "Empleado actualizado"
+                        body<EmpleadoDTO> { description = "EmpleadoDTO actualizado" }
+                    }
+                    HttpStatusCode.BadRequest to {
+                        description = "Algun campo incorrecto, empleado no localizado"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }) {
                 try {
                     val id = call.parameters["id"]!!
                     val request = call.receive<EmpleadoDTO>()
@@ -79,7 +150,26 @@ fun Application.empleadosRoutes() {
             }
 
             // Actualizar solo el avatar
-            put("/avatar/{id}") {
+            put("/avatar/{id}", {
+                description = "Put empleado / AVATAR"
+                request {
+                    pathParameter<String>("id") {
+                        description = "Id del empleado"
+                        required = true
+                    }
+                    // TODO: No estoy seguro de como documentar el receiveChannel
+                }
+                response {
+                    HttpStatusCode.OK to {
+                        description = "Empleado avatar actualizado"
+                        body<EmpleadoDTO> { description = "EmpleadoDTO actualizado" }
+                    }
+                    HttpStatusCode.BadRequest to {
+                        description = "Archivo incorrecto, empleado no localizado"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }) {
                 try {
                     // Vaya movida lo de los ficheros
                     // Recibimos tanto el avatar como el id
@@ -103,7 +193,26 @@ fun Application.empleadosRoutes() {
                 }
             }
 
-            delete("{id}") {
+            delete("{id}", {
+                description = "Delete by id empleado"
+                request {
+                    pathParameter<String>("id") {
+                        description = "Id del empleado a eliminar"
+                        required = true
+                    }
+                }
+
+                response {
+                    HttpStatusCode.NoContent to {
+                        description = "Empleado eliminado con exito"
+                    }
+
+                    HttpStatusCode.BadRequest to {
+                        description = "Empleado no encontrado"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }) {
                 try {
                     val id = call.parameters["id"]!!
                     val empleadoDelete = empleadoService.findById(UUID.fromString(id))

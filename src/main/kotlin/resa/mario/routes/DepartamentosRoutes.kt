@@ -35,9 +35,6 @@ fun Application.departamentosRoutes() {
             get({
                 description = "Get all departamentos"
                 response {
-                    default {
-                        description = "Devuelve listado de DepartamentoDTO"
-                    }
                     HttpStatusCode.OK to {
                         description = "Lista de departamentosDTO"
                         body<List<DepartamentoDTO>> { description = "Lista de departamentosDTO" }
@@ -63,6 +60,7 @@ fun Application.departamentosRoutes() {
 
             // Get by Id /endpoint/id
             get("{id}", {
+                description = "Get by id departamento"
                 request {
                     pathParameter<String>("id") {
                         description = "Id del departamento que nos interese encontrar"
@@ -97,7 +95,7 @@ fun Application.departamentosRoutes() {
              * Luego en BODY -> JSON
             */
             post({
-                description = "Agregar un nuevo departamento"
+                description = "Post departamento"
                 request {
                     body<DepartamentoDTO> {
                         description = "Se recibe un DepartamentoDTO"
@@ -127,7 +125,7 @@ fun Application.departamentosRoutes() {
             }
 
             put("{id}", {
-                description = "Actualizar un departamento"
+                description = "Put departamento"
                 request {
                     pathParameter<String>("id") {
                         description = "Id del departamento"
@@ -162,8 +160,8 @@ fun Application.departamentosRoutes() {
             // Enunciado, se debe proteger esta ruta con el rol de ADMIN
             authenticate {
                 delete("{id}", {
-                    description = "Eliminacion de un departamento con id"
-                    securitySchemeName = "JWT-Auth" // Opcional
+                    description = "Delete by id departamento"
+                    securitySchemeName = "JWT-Auth"
                     request {
                         pathParameter<String>("id") {
                             description = "Id del departamento a eliminar"

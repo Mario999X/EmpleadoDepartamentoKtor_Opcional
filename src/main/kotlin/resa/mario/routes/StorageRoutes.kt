@@ -1,5 +1,7 @@
 package resa.mario.routes
 
+import io.github.smiley4.ktorswaggerui.dsl.get
+import io.github.smiley4.ktorswaggerui.dsl.post
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -7,7 +9,8 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 import resa.mario.services.StorageService
-import java.util.UUID
+import java.io.File
+import java.util.*
 
 private const val END_POINT = "api/storage"
 
@@ -17,8 +20,26 @@ fun Application.storageRoutes() {
 
     routing {
         route("/$END_POINT") {
-            // get file
-            get("{name}") {
+            // get file by name
+            get("{name}", {
+                description = "Get by name file"
+                request {
+                    pathParameter<String>("name") {
+                        description = "Nombre del archivo a buscar"
+                        required = true
+                    }
+                }
+                response {
+                    HttpStatusCode.OK to {
+                        description = "Nombre correcto"
+                        body<File> { description = "Archivo solicitado" }
+                    }
+                    HttpStatusCode.NotFound to {
+                        description = "Archivo no localizado"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }) {
                 try {
                     val name = call.parameters["name"].toString()
                     val file = storageService.getFile(name)
@@ -30,7 +51,21 @@ fun Application.storageRoutes() {
             }
 
             // Post file
-            post {
+            post({
+                description = "Post file"
+                // TODO: Comentar el request
+
+                response {
+                    HttpStatusCode.OK to {
+                        description = "Archivo almacenado correctamente"
+                        body<File> { description = "Archivo almacenado " }
+                    }
+                    HttpStatusCode.BadRequest to {
+                        description = "Error en la subida de archivo"
+                        body<String> { description = "Mensaje con la excepcion correspondiente" }
+                    }
+                }
+            }) {
                 try {
                     val readChannel = call.receiveChannel()
 

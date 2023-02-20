@@ -43,4 +43,10 @@ class DataBaseService(
 
         initData()
     }
+
+    fun clearDataBaseService() {
+        database.tableDepartamentos.clear()
+        database.tableEmpleados.clear()
+        database.tableUsuarios.clear()
+    }
 }

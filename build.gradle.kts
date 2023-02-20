@@ -54,7 +54,11 @@ dependencies {
 
     // Test
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    //testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version") // Estas dependencias no funcionan correctamente
+
+    // JUnit 5 en vez del por defecto de Kotlin...
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 
     // Test corrutinas
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
@@ -79,6 +83,11 @@ dependencies {
 
     // Swagger y Open API con DSL
     implementation("io.github.smiley4:ktor-swagger-ui:1.0.2")
+}
+
+// Para los test, si no, :test de Gradle no se ejecuta
+tasks.test {
+    useJUnitPlatform()
 }
 
 // KSP II -> Para Annotations

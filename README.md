@@ -40,7 +40,7 @@ El proyecto se encuentra estructurado en distintos paquetes para una mejor legib
 ## Documentación
 
 Las clases se encuentran comentadas con KDoc, más la implementación
-de [Dokka](https://kotlinlang.org/docs/dokka-introduction.html), que permite visualizar esos comentarios en
+de [Dokka](https://kotlinlang.org/docs/dokka-introduction.html), que permite visualizar la documentación del programa en
 un archivo *html*
 
 Además, se ha aplicado Swagger y OpenApi para la documentación de los *end points*; se ha usado la

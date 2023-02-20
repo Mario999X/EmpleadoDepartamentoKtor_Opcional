@@ -37,7 +37,6 @@ class EmpleadoCachedRepositoryImpl(
 
         refreshJob = CoroutineScope(Dispatchers.IO).launch {
             while (true) {
-                // TODO: Investigar por que salta un error si el delay se aplica debajo del findAll cuando se crea primero un empleado
                 delay(cache.refreshTime.toLong())
 
                 log.info { "Refrescando cache de empleados" }
@@ -45,7 +44,8 @@ class EmpleadoCachedRepositoryImpl(
                     cache.cache.put(it.id, it)
                 }
 
-                // Ubicacion original del delay
+                // Ubicacion original del delay, aqui daba fallo en un caso muy especifico
+                // Crear un empleado sin hacer ninguna operacion antes, eso si, el empleado se seguia creando.
             }
         }
     }

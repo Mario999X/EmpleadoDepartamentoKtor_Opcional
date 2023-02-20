@@ -159,7 +159,6 @@ fun Application.empleadosRoutes() {
                         description = "Id del empleado"
                         required = true
                     }
-                    // TODO: No estoy seguro de como documentar el receiveChannel
                 }
                 response {
                     HttpStatusCode.OK to {
@@ -173,7 +172,6 @@ fun Application.empleadosRoutes() {
                 }
             }) {
                 try {
-                    // Vaya movida lo de los ficheros
                     // Recibimos tanto el avatar como el id
                     val avatar = call.receiveChannel()
                     val id = call.parameters["id"]!!
@@ -185,7 +183,7 @@ fun Application.empleadosRoutes() {
                     val fileName = "${empleadoUpdate.id}.png"
                     storageService.saveFile(fileName, avatar)
 
-                    // Actualizamos el avatar al usuario
+                    // Actualizamos el avatar del usuario
                     empleadoUpdate.avatar = fileName
                     empleadoService.update(empleadoUpdate.id, empleadoUpdate)
 

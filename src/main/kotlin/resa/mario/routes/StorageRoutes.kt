@@ -53,7 +53,6 @@ fun Application.storageRoutes() {
             // Post file
             post({
                 description = "Post file"
-                // TODO: Comentar el request
 
                 response {
                     HttpStatusCode.OK to {

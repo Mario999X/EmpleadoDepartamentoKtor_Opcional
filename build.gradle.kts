@@ -63,6 +63,12 @@ dependencies {
     // Test corrutinas
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
 
+    // Para testear con content negotiation
+    testImplementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+
+    // Para testear con Tokens
+    implementation("io.ktor:ktor-client-auth:$ktor_version")
+
     // MockK
     testImplementation("io.mockk:mockk:1.13.2")
 

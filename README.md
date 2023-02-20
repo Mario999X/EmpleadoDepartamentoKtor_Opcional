@@ -23,7 +23,7 @@ Este mismo se puede hallar en la [documentation](./documentation).
 
 ## Configuración de la base de datos
 
-En este caso, y a modo de practicar algo distinto, he usado mapas, por el examen más cercano; igualmente
+En este caso, y a modo de practicar algo distinto, he usado mapas; igualmente
 tengo ejemplos usando [Kotysa](https://ufoss.org/kotysa/kotysa.html) y [H2](https://www.h2database.com/html/main.html).
 
 - [Ejemplo-Avanzado](https://github.com/Mario999X/EmpleadoDepartamentoKtorAvanzado)
@@ -63,8 +63,8 @@ enunciado del problema: *departamento* y *empleado*.
 
 ## Seguridad
 
-Se ha aplicado un sistema de tokens [JWT-ktor](https://ktor.io/docs/jwt.html) para asegurar las rutas que necesiten 
-verificación y el uso de [Bcrypt](https://github.com/ToxicBakery/bcrypt-mpp) para garantizar la seguridad de 
+Se ha aplicado un sistema de tokens [JWT-ktor](https://ktor.io/docs/jwt.html) para asegurar las rutas que necesiten
+verificación y el uso de [Bcrypt](https://github.com/ToxicBakery/bcrypt-mpp) para garantizar la seguridad de
 las contraseñas de los usuarios almacenados.
 
 ## Almacenamiento

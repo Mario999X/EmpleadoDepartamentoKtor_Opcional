@@ -75,7 +75,7 @@ Estos se pueden probar con sus propias rutas o bien actualizando el avatar de un
 
 ## Ejecución
 
-Una vez este en ejecución, se recomienda el uso de un cliente que permite recibir y enviar *request-response*,
+Una vez se encuentre en ejecución, se recomienda el uso de un cliente que permite recibir y enviar *request-response*,
 por ejemplo, [Postman](https://www.postman.com/) o el plugin [Thunder Client](https://www.thunderclient.com/)
 en [VSC](https://code.visualstudio.com/)
 

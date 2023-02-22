@@ -67,6 +67,9 @@ Se ha aplicado un sistema de tokens [JWT-ktor](https://ktor.io/docs/jwt.html) pa
 verificación y el uso de [Bcrypt](https://github.com/ToxicBakery/bcrypt-mpp) para garantizar la seguridad de
 las contraseñas de los usuarios almacenados.
 
+Además, la aplicación cuenta con seguridad SSL en uno de los dos puertos de entrada (permanece la opción sin SSL para mostrar ambos a modo de ejemplo) 
+[en Docker, solo funcionara por el puerto sin SSL]
+
 ## Almacenamiento
 
 Se ha implantado un sistema de almacenamiento propio de *Ktor* para la subida de ficheros en binario.

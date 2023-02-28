@@ -1,4 +1,4 @@
-# Ejercicio opcional PSP: KTOR-API-REST REACTIVO
+# Ejercicio opcional PSP-AD: KTOR-API-REST REACTIVO
 
 Servicio "Departamento-Empleado" con Usuarios, para la asignatura Programación de Procesos y Servicios
 del IES Luis Vives (Leganés) curso 22/23.
@@ -32,6 +32,10 @@ tengo ejemplos usando [Kotysa](https://ufoss.org/kotysa/kotysa.html) y [H2](http
 De todas formas, y respetando el diseño mostrado en esos ejemplos, he tratado de hacer las operaciones
 de la manera más parecida posible, esto puede verse en los repositorios. Asi, da la sensación de estar trabajando con
 una base de datos real.
+
+## Versión Spring Boot
+
+- [Ejemplo-Spring](https://github.com/Mario999X/EmpleadoDepartamentoSpringOpcional)
 
 # Estructura del proyecto
 
